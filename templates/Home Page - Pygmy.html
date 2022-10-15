@@ -1,0 +1,168 @@
+<!doctype html>
+<title>Homepage</title>
+
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="icon" href="Logo_Draft_1.svg">
+
+<style>
+:root {
+  --pale-orange: #FF8E72;
+  --dark-blue: #094074;
+  --pale-blue: #81ADC8;
+  --yellowish: #D8F793
+}
+
+
+body {
+  background: var(--pale-orange);
+  overflow:hidden
+}
+
+p {
+  background-color: var(--pale-blue);
+  color: var(--dark-blue);
+  font-size : 56px;
+  font-family: "Lucida Console", monospace;
+}
+
+p span {
+    background-color: var(--pale-blue);
+    font-size : 56px;
+    font-family: "Lucida Console", monospace;
+    color: var(--dark-blue);
+    border-radius: 50px;
+    padding: 5px;
+}
+
+h1 {
+  background-color: var(--pale-blue);
+  font-size : 64px;
+  text-align: center;
+  color:var(--dark-blue);
+  font-family: 'Georgia', serif;
+  border: 10px dashed var(--dark-blue);
+}
+
+h1 span {
+    background-color: var(--pale-blue);
+    font-size: 64px;
+    text-align: center;
+    font-family: 'Georgia', serif;
+    color: var(--dark-blue);
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: var(--pale-blue);
+  padding: 10px;
+}
+.grid-item {
+  background-color: var(--pale-blue);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.button {
+  border: none;
+  padding: 5px;
+  font-size: 128px;
+  width: 250px;
+  box-shadow: 0 2px 4px darkslategray;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 50px;
+}
+
+.button:hover {
+  opacity: 0.7;
+}
+
+.youtube {
+  background: #bb0000;
+  color: white;
+  font-size: 0;
+  width: 350px;
+  height: 125px;
+}
+
+.coreElec {
+  background: #FFFFFF;
+  color: white;
+  font-size: 0;
+  width: 200px;
+  height: 125px;
+}
+
+.gmail {
+  background: #FFFFFF;
+  color: white;
+  font-size: 0;
+  width: 200px;
+  height: 125px;
+}
+
+.google {
+  background: #dd4b39;
+  color: white;
+  width: 200px;
+  height: 125px;
+}
+
+.w3schools {
+  background:rgb(36, 37, 44);
+  color: white;
+  font-size: 0;
+  width: 200px;
+  height: 125px;
+}
+
+.rickroll {
+  background: #a09cb6;
+  color: white;
+  font-size: 0;
+  width: 200px;
+  height: 125px;
+}
+
+.adafruit {
+  background: #1c262c;
+  color: white;
+  font-size: 0;
+  width: 200px;
+  height: 125px;
+}
+
+.hackaday {
+  background: rgb(0,0,0);
+  color: white;
+  font-size: 0;
+  width: 200px;
+  height: 125px;
+}
+
+.weather {
+  background: #45abed;
+  color: white;
+  font-size:0;
+  width: 200px;
+  height: 125px;
+}
+
+</style>
+
+<h1>Home</h1>
+<div class = "grid-container" style="width:97.5vw;height:82vh;line-height:3em;overflow-y:overlay;background-color: var(--pale-blue);color: var(--dark-blue);padding:10px;border: 10px dashed var(--dark-blue);">
+  <div class="grid-item"><button class='button youtube'><a href='https://www.youtube.com/'><img src='/static/youtube_logo.svg'; width=300px; height=auto;></a></button></div>
+  <div class="grid-item"><button class='button gmail'><a href='https://mail.google.com/mail/u/0/#inbox'><img src='https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg'; width=100px; height=auto;></a></button></div>
+  <div class="grid-item"><button class='button coreElec'><a href='https://core-electronics.com.au'><img src='/static/Core_Electronics_Logo.png'; width=125px; height=auto;></a></button></div>
+  <div class="grid-item"><button class='button w3schools'><a href='https://www.w3schools.com/'><img src='/static/w3schools_logo.png'; width=100px; height=auto;></a></button></div>
+  <div class="grid-item"><button class='button google'><a href='https://www.google.com/'><img src='/static/Google_Logo.png'; width=110px; height=auto;></a></button></div>
+  <div class="grid-item"><button class='button rickroll'><a href='https://boulderbugle.com/dogs-talk-to-asian-girl-szaq42bs'><img src='/static/rickroll.png'; width=160px; height=auto;></a></button></div>
+  <div class="grid-item"><button class='button adafruit'><a href='https://www.adafruit.com'><img src='/static/adafruit_logo.png'; width=120px; height=auto;></a></button></div>
+  <div class="grid-item"><button class='button hackaday'><a href='https://www.hackaday.com'><img src='/static/hackaday_logo.png'; width=100px; height=auto;></a></button></div>
+  <div class="grid-item"><button class='button weather'><a href='http://www.bom.gov.au/nsw/forecasts/sydney.shtml'><img src='/static/weather.png'; width=200px; height=auto;></a></button></div>
+</div>

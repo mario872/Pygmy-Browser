@@ -14,12 +14,15 @@ import pygame
 from pynput.keyboard import Key, Controller
 import time
 from win32api import GetSystemMetrics
+from flask import Flask, render_template
+
+import threading
 
 pygame.mixer.init()
 
 link = ''
 history = []
-home_page_url = 'file:///C:/Users/James/Desktop/Home-Page/Home%20Page%20-%20Pygmy.html'
+home_page_url = 'http://127.0.0.1:5000/homepage'
 
 keyboard = Controller()
 
@@ -163,6 +166,8 @@ class MainWindow(QMainWindow):
  
         #Then set the url
         self.tabs.currentWidget().setUrl(q)
+        if q.toString() == 'http://127.0.0.1:5000/homepage':
+            self.url_bar.setText("Homepage")
     
     def add_new_tab(self, qurl = None, label ="Home"):
  
@@ -269,9 +274,21 @@ class MainWindow(QMainWindow):
         #Otherwise, set the text in the url bar to match the real url
         self.url_bar.setText(q.toString())
 
-
 app = QApplication(sys.argv)
 QApplication.setApplicationName('Pygmy')
 QApplication.setWindowIcon(QIcon("Logo_Draft_1.svg"))
 window = MainWindow()
+
+
+website = Flask(__name__)
+@website.route("/homepage")
+def homepage():
+    return render_template('Home Page - Pygmy.html')
+
+def run_website():
+    website.run(host='0.0.0.0', port=5000, debug=False)
+website_thread = threading.Thread(target = run_website)
+website_thread.setDaemon(True)
+website_thread.start()
+
 app.exec_()
