@@ -208,8 +208,8 @@ class MainWindow(QMainWindow):
             return
 
         #Add url to history
-        self.tabs.setCurrentWidget(self.tabs.currentIndex)
-        history.append(str(self.tabs.currentWidget().url()))
+        #self.tabs.setCurrentWidget(self.tabs.currentIndex)
+        #history.append(str(self.tabs.currentWidget().url()))
 
         #Otherwise, make like a tree and get out of here!
         i = self.tabs.currentIndex()
