@@ -39,6 +39,11 @@ p span {
     padding: 5px;
 }
 
+.spaceR{
+  font-size : 12px;
+}
+
+
 h1 {
   background-color: var(--pale-blue);
   font-size : 64px;
@@ -56,17 +61,31 @@ h1 span {
     color: var(--dark-blue);
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  background-color: var(--pale-blue);
-  padding: 10px;
+label {
+  font-size : 24px;
+  font-family: "Lucida Console", monospace;
+  color: var(--dark-blue);
+  padding: 5px;
 }
-.grid-item {
-  background-color: var(--pale-blue);
-  padding: 20px;
-  font-size: 30px;
-  text-align: center;
+
+input[type=text] {
+  background-color: var(--yellowish);
+  color: var(--dark-blue);
+  border-radius: 4px;
+  padding: 5px;
+  width: 100%;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+select {
+  background-color: var(--yellowish);
+  color: var(--dark-blue);
+  border-radius: 4px;
+  padding: 5px;
+  width: 100%;
+  font-size: 18px;
+  box-sizing: border-box;
 }
 
 .button {
@@ -87,8 +106,25 @@ h1 span {
 </style>
 
 <body>
-  <div id = "div", style="display:none;width:50vw;height:90vh;line-height:3em;overflow-y:hidden;background-color: var(--celadon-blue);color: var(--celadon);padding:10px; margin:auto; border: 10px dashed var(--dark-jungle-green);">
-  <script>
-    setTimeout(document.getElementById("div").style.display = "block", 1000)
-  </script>
+  <div style="width:50vw;height:90vh;line-height:3em;overflow-y:hidden;background-color: var(--pale-blue);color: var(--celadon);padding:10px; margin:auto; border: 10px dashed var(--dark-blue);">
+    <p style="text-align:center">Settings</p>
+
+    <p class="spaceR"></p>
+    <form action="{{ url_for('settings')}}" method="post", autocomplete="off">
+      <label for="name">Add space for file:// your html homepage:</label>
+      <p class = "spaceR"></p>
+      <input type="text" id="fileLocation" name="fileLocation" placeholder="">
+
+      <label for="name">Search engine:</label>
+      <p class = "spaceR"></p>
+      <select id="searchEngine" name="searchEngine">
+        <option value="Google">Google</option>
+        <option value="Duck Duck Go">Duck Duck Go</option>
+        <option value="Bing">Bing</option>
+        <option value="Yahoo">Yahoo</option>
+      </select>
+      <input type="Submit" value="Save" class="button">
+    </form>
+    
+  </div>
 </body>

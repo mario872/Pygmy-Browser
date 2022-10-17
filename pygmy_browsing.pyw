@@ -4,6 +4,7 @@
 #then added, rickroll, custom icons, shortcuts, google search 
 #from url bar. Custom settings page coming soon.
 
+from re import search
 import sys
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -14,15 +15,26 @@ import pygame
 from pynput.keyboard import Key, Controller
 import time
 from win32api import GetSystemMetrics
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
+import json
 
 import threading
 
 pygame.mixer.init()
 
+config_file = open('configuration.txt', 'r')
+config_settings = json.loads(config_file.readlines()[0])
+config_file.close()
+
 link = ''
 history = []
 home_page_url = 'http://127.0.0.1:5000/homepage'
+settings_page_url = 'http://127.0.0.1:5000/settings'
+
+
+search_engine = config_settings["search_engine"]
+#homepage_location = config_settings["home_file_location"]
+homepage_location = 'Home Page - Pygmy.html'
 
 keyboard = Controller()
 
@@ -109,6 +121,12 @@ class MainWindow(QMainWindow):
         secret_rickroll_button.setIcon(QIcon('Logo_Draft_1.svg'))
         navigation_bar.addAction(secret_rickroll_button)
 
+        #Settings button
+        settings_button = QAction("Settings", self)
+        settings_button.triggered.connect(self.go_to_settings)
+        settings_button.setIcon(QIcon('Settings.png'))
+        navigation_bar.addAction(settings_button)
+
         #Shortcut keyboard bindings
 
         #Reload shortuct: CTRL + R
@@ -157,7 +175,16 @@ class MainWindow(QMainWindow):
         if not keyword([' '], self.url_bar.text()):
             q = QUrl(self.url_bar.text())
         else:
-            q = QUrl('https://google.com/search?q=' + self.url_bar.text().replace(' ', '+'))
+            if search_engine == 'Google':
+                q = QUrl('https://google.com/search?q=' + self.url_bar.text().replace(' ', '+'))
+            elif search_engine == 'Duck Duck Go':
+                q = QUrl('https://duckduckgo.com/?q=' + self.url_bar.text().replace(' ', '+'))
+            elif search_engine == 'Bing':
+                q = QUrl('https://www.bing.com/search?q=' + self.url_bar.text().replace(' ', '+'))
+            elif search_engine == 'Yahoo':
+                q = QUrl('https://au.search.yahoo.com/search?p=' + self.url_bar.text().replace(' ', '+'))
+            else:
+                q = QUrl('https://google.com/search?q=' + self.url_bar.text().replace(' ', '+'))
  
         #If the hyper-text-transfer-protocols is blank
         if q.scheme() == "":
@@ -166,15 +193,20 @@ class MainWindow(QMainWindow):
  
         #Then set the url
         self.tabs.currentWidget().setUrl(q)
-        if q.toString() == 'http://127.0.0.1:5000/homepage':
-            self.url_bar.setText("Homepage")
     
     def add_new_tab(self, qurl = None, label ="Home"):
  
         #If no one added a url in url bar
         if qurl is None:
             #Go to home page
-            qurl = QUrl('https://www.google.com')
+            if search_engine == 'Google':
+                qurl = QUrl('https://www.google.com')
+            elif search_engine == 'Duck Duck Go':
+                qurl = QUrl('https://duckduckgo.com/')
+            elif search_engine == 'Bing':
+                qurl = QUrl('https://bing.com/')
+            elif search_engine == 'Yahoo':
+                qurl = QUrl('https://search.yahoo.com')
  
         #Make a place to see home page or url open
         browser = QWebEngineView()
@@ -266,6 +298,10 @@ class MainWindow(QMainWindow):
     def go_to_google(self):
         self.tabs.currentWidget().setUrl(QUrl('https://www.google.com'))
 
+    def go_to_settings(self):
+        self.tabs.currentWidget().setUrl(QUrl(settings_page_url))
+        self.navigate_to_url()
+
     def update_url(self, q, browser = None):
         #If this signal is not from the current tab then ignore it
         if browser != self.tabs.currentWidget():
@@ -283,10 +319,24 @@ window = MainWindow()
 website = Flask(__name__)
 @website.route("/homepage")
 def homepage():
-    return render_template('Home Page - Pygmy.html')
+    return render_template(homepage_location)
+
+@website.route("/settings", methods=["GET", "POST"])
+def settings():
+    global search_engine
+    #global homepage_location
+    #homepage_location = str(request.form.get("fileLocation"))
+    search_engine = str(request.form.get("searchEngine"))
+    config = {"search_engine": search_engine, "home_file_location": homepage_location}
+    config_json = json.dumps(config)
+    config_json_file = open("configuration.txt","w")
+    config_json_file.write(str(config_json))
+    config_json_file.close()
+    return render_template('Settings Page.html')
 
 def run_website():
     website.run(host='0.0.0.0', port=5000, debug=False)
+
 website_thread = threading.Thread(target = run_website)
 website_thread.setDaemon(True)
 website_thread.start()
